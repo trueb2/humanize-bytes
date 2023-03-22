@@ -9,7 +9,7 @@
 //! 1 KiB = 1024 B
 //! 
 //! ```rust
-//! use human_byte_size::{humanize_bytes_decimal, humanize_bytes_binary};
+//! use humanize_bytes::{humanize_bytes_decimal, humanize_bytes_binary};
 //! 
 //! println!("{}", humanize_bytes_binary!(0)); // 0 B
 //! println!("{}", humanize_bytes_binary!(512)); // 512 B
