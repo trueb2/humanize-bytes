@@ -1,0 +1,11 @@
+[package]
+name = "human_byte_size"
+version = "0.1.0"
+edition = "2021"
+
+[features]
+default = ["binary", "decimal"]
+binary = []
+decimal = []
+
+[dependencies]
