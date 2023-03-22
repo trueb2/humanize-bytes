@@ -6,7 +6,7 @@ authors = ["Jacob T. <jtrueb@northwestern.edu>"]
 homepage = "https://github.com/trueb2/humanize-bytes"
 repository = "https://github.com/trueb2/humanize-bytes"
 description = "Format byte sizes in human readable form"
-license = "MIT or Apache-2.0"
+license = "MIT OR Apache-2.0"
 categories = ["value-formatting"]
 keywords = ["human", "bytes", "formatting", "conversion", "format"]
 
