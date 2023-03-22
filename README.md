@@ -1,3 +1,7 @@
+[![CI](https://github.com/trueb2/humanize-bytes/actions/workflows/rust.yml/badge.svg)](https://github.com/trueb2/humanize-bytes/actions/workflows/rust.yml)
+[![Crate](https://img.shields.io/crates/v/humanize-bytes)](https://crates.io/crates/humanize-bytes)
+
+
 # Humanize Bytes
 
 Create a human-readable string representation of a number of bytes either in binary or decimal units (SI or IEC).
