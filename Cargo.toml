@@ -1,6 +1,6 @@
 [package]
 name = "humanize-bytes"
-version = "1.0.1"
+version = "1.0.2"
 edition = "2021"
 authors = ["Jacob T. <jtrueb@northwestern.edu>"]
 homepage = "https://github.com/trueb2/humanize-bytes"
@@ -8,7 +8,7 @@ repository = "https://github.com/trueb2/humanize-bytes"
 description = "Format byte sizes in human readable form"
 license = "MIT OR Apache-2.0"
 categories = ["value-formatting"]
-keywords = ["human", "bytes", "formatting", "conversion", "format"]
+keywords = ["human", "bytes", "units", "conversion", "format"]
 
 [features]
 default = ["binary", "decimal"]
