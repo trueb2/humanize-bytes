@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests {
-    use humanize_bytes::{humanize_bytes_binary, humanize_bytes_decimal};
+    use humanize_bytes::{humanize_bytes_binary, humanize_bytes_decimal, humanize_quantity};
 
     #[test]
     fn test_humanize_bytes_binary() {
@@ -43,5 +43,29 @@ mod tests {
         assert_eq!(humanize_bytes_decimal!(1_000_000_000_000_000_000u128), "1 EB");
         assert_eq!(humanize_bytes_decimal!(1_000_000_000_000_000_000_000u128), "1 ZB");
         assert_eq!(humanize_bytes_decimal!(1_000_000_000_000_000_000_000_000u128), "1 YB");
+        assert_eq!(humanize_bytes_decimal!(1_000_000_000_000_000_000_000_000_000u128), "1 RB");
+        assert_eq!(humanize_bytes_decimal!(1_000_000_000_000_000_000_000_000_000_000u128), "1 QB");
+    }
+
+    #[test]
+    fn test_humanize_quantity() {
+        assert_eq!(humanize_quantity!(0), "0");
+        assert_eq!(humanize_quantity!(1), "1");
+        assert_eq!(humanize_quantity!(512), "512");
+        assert_eq!(humanize_quantity!(999), "999");
+        assert_eq!(humanize_quantity!(1000), "1 k");
+        assert_eq!(humanize_quantity!(1099), "1 k");
+        assert_eq!(humanize_quantity!(1100), "1.1 k");
+        assert_eq!(humanize_quantity!(999_999), "999.9 k");
+        assert_eq!(humanize_quantity!(1_000_000), "1 M");
+        assert_eq!(humanize_quantity!(999_999_999), "999.9 M");
+        assert_eq!(humanize_quantity!(1_000_000_000), "1 G");
+        assert_eq!(humanize_quantity!(1_000_000_000_000u64), "1 T");
+        assert_eq!(humanize_quantity!(1_000_000_000_000_000u64), "1 P");
+        assert_eq!(humanize_quantity!(1_000_000_000_000_000_000u128), "1 E");
+        assert_eq!(humanize_quantity!(1_000_000_000_000_000_000_000u128), "1 Z");
+        assert_eq!(humanize_quantity!(1_000_000_000_000_000_000_000_000u128), "1 Y");
+        assert_eq!(humanize_quantity!(1_000_000_000_000_000_000_000_000_000u128), "1 R");
+        assert_eq!(humanize_quantity!(1_000_000_000_000_000_000_000_000_000_000u128), "1 Q");
     }
 }

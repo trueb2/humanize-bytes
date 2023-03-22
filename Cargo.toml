@@ -1,6 +1,6 @@
 [package]
 name = "humanize-bytes"
-version = "1.0.2"
+version = "1.0.3"
 edition = "2021"
 authors = ["Jacob T. <jtrueb@northwestern.edu>"]
 homepage = "https://github.com/trueb2/humanize-bytes"
@@ -9,11 +9,6 @@ description = "Format byte sizes in human readable form"
 license = "MIT OR Apache-2.0"
 categories = ["value-formatting"]
 keywords = ["human", "bytes", "units", "conversion", "format"]
-
-[features]
-default = ["binary", "decimal"]
-binary = []
-decimal = []
 
 [dependencies]
 smartstring =  { version = "1.0.1", default-features = false }

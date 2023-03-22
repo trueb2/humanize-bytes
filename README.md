@@ -12,7 +12,7 @@ https://en.wikipedia.org/wiki/Binary_prefix
 1 KiB = 1024 B
  
 ```rust
-use humanize_bytes::{humanize_bytes_decimal, humanize_bytes_binary};
+use humanize_bytes::{humanize_bytes_decimal, humanize_bytes_binary, humanize_quantity};
  
 println!("{}", humanize_bytes_binary!(0)); // 0 B
 println!("{}", humanize_bytes_binary!(512)); // 512 B
@@ -31,6 +31,15 @@ println!("{}", humanize_bytes_decimal!(1000 + 99)); // 1 kB
 println!("{}", humanize_bytes_decimal!(1000 + 100)); // 1.1 kB
 println!("{}", humanize_bytes_decimal!(1000 * 1000 - 1)); // 999.9 kB
 println!("{}", humanize_bytes_decimal!(1000 * 1000)); // 1 MB
+
+println!("{}", humanize_quantity!(0)); // 0
+println!("{}", humanize_quantity!(512)); // 512
+println!("{}", humanize_quantity!(999)); // 999
+println!("{}", humanize_quantity!(1000)); // 1 k
+println!("{}", humanize_quantity!(1000 + 99)); // 1 k
+println!("{}", humanize_quantity!(1000 + 100)); // 1.1 k
+println!("{}", humanize_quantity!(1000 * 1000 - 1)); // 999.9 k
+println!("{}", humanize_quantity!(1000 * 1000)); // 1 M
 ```
 
 ## Implementation Details
