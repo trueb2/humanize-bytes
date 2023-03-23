@@ -11,32 +11,34 @@
 //! ```rust
 //! use humanize_bytes::{humanize_bytes_decimal, humanize_bytes_binary, humanize_quantity};
 //!  
-//! println!("{}", humanize_bytes_binary!(0)); // 0 B
-//! println!("{}", humanize_bytes_binary!(512)); // 512 B
-//! println!("{}", humanize_bytes_binary!(1023)); // 1023 B
-//! println!("{}", humanize_bytes_binary!(1024)); // 1 KiB
-//! println!("{}", humanize_bytes_binary!(1024 + 99)); // 1 KiB
-//! println!("{}", humanize_bytes_binary!(1024 + 103)); // 1.1 KiB
-//! println!("{}", humanize_bytes_binary!(1024 * 1024 - 1)); // 1023.9 kB
-//! println!("{}", humanize_bytes_binary!(1024 * 1024)); // 1 MB
-//!  
-//! println!("{}", humanize_bytes_decimal!(0)); // 0 B
-//! println!("{}", humanize_bytes_decimal!(512)); // 512 B
-//! println!("{}", humanize_bytes_decimal!(999)); // 999 B
-//! println!("{}", humanize_bytes_decimal!(1000)); // 1 kB
-//! println!("{}", humanize_bytes_decimal!(1000 + 99)); // 1 kB
-//! println!("{}", humanize_bytes_decimal!(1000 + 100)); // 1.1 kB
-//! println!("{}", humanize_bytes_decimal!(1000 * 1000 - 1)); // 999.9 kB
-//! println!("{}", humanize_bytes_decimal!(1000 * 1000)); // 1 MB
-//! 
-//! println!("{}", humanize_quantity!(0)); // 0
-//! println!("{}", humanize_quantity!(512)); // 512
-//! println!("{}", humanize_quantity!(999)); // 999
-//! println!("{}", humanize_quantity!(1000)); // 1 k
-//! println!("{}", humanize_quantity!(1000 + 99)); // 1 k
-//! println!("{}", humanize_quantity!(1000 + 100)); // 1.1 k
-//! println!("{}", humanize_quantity!(1000 * 1000 - 1)); // 999.9 k
-//! println!("{}", humanize_quantity!(1000 * 1000)); // 1 M
+//! assert_eq!(humanize_bytes_binary!(0), "0 B");
+//! assert_eq!(humanize_bytes_binary!(512), "512 B");
+//! assert_eq!(humanize_bytes_binary!(1023), "1023 B");
+//! assert_eq!(humanize_bytes_binary!(1024), "1 KiB");
+//! assert_eq!(humanize_bytes_binary!(1024 + 99), "1 KiB");
+//! assert_eq!(humanize_bytes_binary!(1024 + 103), "1.1 KiB");
+//! assert_eq!(humanize_bytes_binary!(1024 * 1024 - 1), "1023.9 KiB");
+//! assert_eq!(humanize_bytes_binary!(1024 * 1024), "1 MiB");
+//! assert_eq!(humanize_bytes_binary!(1024 * 1024 * 1024), "1 GiB");
+//!
+//! assert_eq!(humanize_bytes_decimal!(0), "0 B");
+//! assert_eq!(humanize_bytes_decimal!(512), "512 B");
+//! assert_eq!(humanize_bytes_decimal!(999), "999 B");
+//! assert_eq!(humanize_bytes_decimal!(1000), "1 kB");
+//! assert_eq!(humanize_bytes_decimal!(1000 + 99), "1 kB");
+//! assert_eq!(humanize_bytes_decimal!(1000 + 100), "1.1 kB");
+//! assert_eq!(humanize_bytes_decimal!(1000 * 1000 - 1), "999.9 kB");
+//! assert_eq!(humanize_bytes_decimal!(1000 * 1000), "1 MB");
+//! assert_eq!(humanize_bytes_decimal!(1000 * 1000 * 1000), "1 GB");
+//!
+//! assert_eq!(humanize_quantity!(0), "0");
+//! assert_eq!(humanize_quantity!(512), "512");
+//! assert_eq!(humanize_quantity!(999), "999");
+//! assert_eq!(humanize_quantity!(1000), "1 k");
+//! assert_eq!(humanize_quantity!(1000 + 99), "1 k");
+//! assert_eq!(humanize_quantity!(1000 + 100), "1.1 k");
+//! assert_eq!(humanize_quantity!(1000 * 1000 - 1), "999.9 k");
+//! assert_eq!(humanize_quantity!(1000 * 1000), "1 M");
 //! ```
 //!
 

@@ -1,6 +1,6 @@
 [package]
 name = "humanize-bytes"
-version = "1.0.3"
+version = "1.0.4"
 edition = "2021"
 authors = ["Jacob T. <jtrueb@northwestern.edu>"]
 homepage = "https://github.com/trueb2/humanize-bytes"
