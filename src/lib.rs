@@ -1,16 +1,16 @@
 //! # Humanize Bytes
-//!  
+//!
 //! Format a number of bytes as a human-readable string.
-//! 
+//!
 //! See for more info: <https://en.wikipedia.org/wiki/Binary_prefix>
-//! 
+//!
 //! 1 KB = 1000 B
-//! 
+//!
 //! 1 KiB = 1024 B
-//! 
+//!
 //! ```rust
 //! use humanize_bytes::{humanize_bytes_decimal, humanize_bytes_binary, humanize_quantity};
-//!  
+//!
 //! assert_eq!(humanize_bytes_binary!(0), "0 B");
 //! assert_eq!(humanize_bytes_binary!(512), "512 B");
 //! assert_eq!(humanize_bytes_binary!(1023), "1023 B");
@@ -42,6 +42,8 @@
 //! ```
 //!
 
+#![no_std]
+
 pub use smartstring;
 
 mod binary {
@@ -50,7 +52,7 @@ mod binary {
     /// Format a number of bytes as a human-readable string, using the IEC binary suffixes.
     ///
     /// 1024 (B, KiB, MiB, GiB, TiB, PiB, EiB, ZiB, YiB, RiB, QiB)
-    /// 
+    ///
     #[macro_export]
     macro_rules! humanize_bytes_binary {
         ($value:expr) => {
@@ -74,7 +76,7 @@ mod binary {
                     let mut once = true;
                     let mut extra = SmartString::<LazyCompact>::new();
                     write!(extra, "{:.2}", units).unwrap();
-                    let trimmed = extra 
+                    let trimmed = extra
                         .trim_end_matches(|_| if once { once = false; true } else { false })
                         .trim_end_matches("0")
                         .trim_end_matches(".");
@@ -95,7 +97,7 @@ mod decimal {
     ///
     /// Format a number of bytes as a human-readable string, using the SI decimal suffixes.
     ///
-    /// 1000 (B, kB, MB, GB, TB, PB, EB, ZB, YB) 
+    /// 1000 (B, kB, MB, GB, TB, PB, EB, ZB, YB)
     #[macro_export]
     macro_rules! humanize_bytes_decimal {
         ($value:expr) => {
@@ -119,16 +121,16 @@ mod decimal {
                     let mut once = true;
                     let mut extra = SmartString::<LazyCompact>::new();
                     write!(extra, "{:.2}", units).unwrap();
-                    let trimmed = extra 
+                    let trimmed = extra
                         .trim_end_matches(|_| if once { once = false; true } else { false })
                         .trim_end_matches("0")
                         .trim_end_matches(".");
                     let mut result: SmartString<LazyCompact> = trimmed.into();
                     result.push_str(" ");
                     result.push_str(SUFFIX[base as usize]);
-                    result                
+                    result
                 }
-            }        
+            }
         }
     }
 
@@ -138,9 +140,9 @@ mod decimal {
     ///
     /// Format a number of bytes as a human-readable string, using the SI decimal suffixes.
     ///
-    /// Factors of 1000 (, k, M, G, T, P, E, Z, Y, R, Q) 
+    /// Factors of 1000 (, k, M, G, T, P, E, Z, Y, R, Q)
     /// kilo, mega, giga, tera, peta, exa, zetta, yotta, ronna, quetta
-    /// 
+    ///
     #[macro_export]
     macro_rules! humanize_quantity {
         ($value:expr) => {
@@ -164,16 +166,16 @@ mod decimal {
                     let mut once = true;
                     let mut extra = SmartString::<LazyCompact>::new();
                     write!(extra, "{:.2}", units).unwrap();
-                    let trimmed = extra 
+                    let trimmed = extra
                         .trim_end_matches(|_| if once { once = false; true } else { false })
                         .trim_end_matches("0")
                         .trim_end_matches(".");
                     let mut result: SmartString<LazyCompact> = trimmed.into();
                     result.push_str(" ");
                     result.push_str(SUFFIX[base as usize]);
-                    result                
+                    result
                 }
-            }        
+            }
         }
     }
 
