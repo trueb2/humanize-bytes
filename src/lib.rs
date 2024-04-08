@@ -55,38 +55,48 @@ mod binary {
     ///
     #[macro_export]
     macro_rules! humanize_bytes_binary {
-        ($value:expr) => {
-            {
-                use ::humanize_bytes::smartstring::{SmartString, LazyCompact};
-                use ::core::fmt::Write;
-                let num_bytes = { $value } as f64;
-                if num_bytes <= 0.0 {
-                    "0 B".into()
-                } else if num_bytes < 1024.0 {
-                    let mut result = SmartString::<LazyCompact>::new();
-                    write!(result, "{} B", num_bytes as u16).unwrap();
-                    result
-                } else {
-                    const SUFFIX: [&str; 11] = ["B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB", "RiB", "QiB"];
-                    const UNIT: f64 = 1024.0;
-                    let base = num_bytes.log2() as usize / 10;
-                    let curr_base = UNIT.powi(base as i32) as f64;
-                    let units = num_bytes / curr_base;
-                    let units = (units * 100.0).floor() / 100.0;
-                    let mut once = true;
-                    let mut extra = SmartString::<LazyCompact>::new();
-                    write!(extra, "{:.2}", units).unwrap();
-                    let trimmed = extra
-                        .trim_end_matches(|_| if once { once = false; true } else { false })
-                        .trim_end_matches("0")
-                        .trim_end_matches(".");
-                    let mut result: SmartString<LazyCompact> = trimmed.into();
-                    result.push_str(" ");
-                    result.push_str(SUFFIX[base as usize]);
-                    result
-                }
+        ($value:expr) => {{
+            use ::core::fmt::Write;
+            use ::humanize_bytes::smartstring::{LazyCompact, SmartString};
+            let mut num_bytes = { $value } as f64;
+            let mut result = SmartString::<LazyCompact>::new();
+            if num_bytes < 0.0 {
+                write!(result, "-").unwrap();
+                num_bytes = -num_bytes;
             }
-        }
+
+            if num_bytes < 1024.0 {
+                write!(result, "{} B", num_bytes as u16).unwrap();
+                result
+            } else {
+                const SUFFIX: [&str; 11] = [
+                    "B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB", "RiB", "QiB",
+                ];
+                const UNIT: f64 = 1024.0;
+                let base = num_bytes.log2() as usize / 10;
+                let curr_base = UNIT.powi(base as i32) as f64;
+                let units = num_bytes / curr_base;
+                let units = (units * 100.0).floor() / 100.0;
+                let mut once = true;
+                let mut extra = SmartString::<LazyCompact>::new();
+                write!(extra, "{:.2}", units).unwrap();
+                let trimmed = extra
+                    .trim_end_matches(|_| {
+                        if once {
+                            once = false;
+                            true
+                        } else {
+                            false
+                        }
+                    })
+                    .trim_end_matches("0")
+                    .trim_end_matches(".");
+                result.push_str(trimmed);
+                result.push_str(" ");
+                result.push_str(SUFFIX[base as usize]);
+                result
+            }
+        }};
     }
 
     pub use humanize_bytes_binary;
@@ -100,42 +110,50 @@ mod decimal {
     /// 1000 (B, kB, MB, GB, TB, PB, EB, ZB, YB)
     #[macro_export]
     macro_rules! humanize_bytes_decimal {
-        ($value:expr) => {
-            {
-                use ::humanize_bytes::smartstring::{SmartString, LazyCompact};
-                use ::core::fmt::Write;
-                let num_bytes = { $value } as f64;
-                if num_bytes <= 0.0 {
-                    "0 B".into()
-                } else if num_bytes < 1000.0 {
-                    let mut result = SmartString::<LazyCompact>::new();
-                    write!(result, "{} B", num_bytes as u16).unwrap();
-                    result
-                } else {
-                    const SUFFIX: [&str; 11] = ["B", "kB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB", "RB", "QB"];
-                    const UNIT: f64 = 1000.0;
-                    let base = num_bytes.log10() as usize / 3;
-                    let curr_base = UNIT.powi(base as i32) as f64;
-                    let units = num_bytes / curr_base;
-                    let units = (units * 100.0).floor() / 100.0;
-                    let mut once = true;
-                    let mut extra = SmartString::<LazyCompact>::new();
-                    write!(extra, "{:.2}", units).unwrap();
-                    let trimmed = extra
-                        .trim_end_matches(|_| if once { once = false; true } else { false })
-                        .trim_end_matches("0")
-                        .trim_end_matches(".");
-                    let mut result: SmartString<LazyCompact> = trimmed.into();
-                    result.push_str(" ");
-                    result.push_str(SUFFIX[base as usize]);
-                    result
-                }
+        ($value:expr) => {{
+            use ::core::fmt::Write;
+            use ::humanize_bytes::smartstring::{LazyCompact, SmartString};
+            let mut num_bytes = { $value } as f64;
+            let mut result = SmartString::<LazyCompact>::new();
+            if num_bytes < 0.0 {
+                write!(result, "-").unwrap();
+                num_bytes = -num_bytes;
             }
-        }
+            if num_bytes < 1000.0 {
+                write!(result, "{} B", num_bytes as u16).unwrap();
+                result
+            } else {
+                const SUFFIX: [&str; 11] = [
+                    "B", "kB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB", "RB", "QB",
+                ];
+                const UNIT: f64 = 1000.0;
+                let base = num_bytes.log10() as usize / 3;
+                let curr_base = UNIT.powi(base as i32) as f64;
+                let units = num_bytes / curr_base;
+                let units = (units * 100.0).floor() / 100.0;
+                let mut once = true;
+                let mut extra = SmartString::<LazyCompact>::new();
+                write!(extra, "{:.2}", units).unwrap();
+                let trimmed = extra
+                    .trim_end_matches(|_| {
+                        if once {
+                            once = false;
+                            true
+                        } else {
+                            false
+                        }
+                    })
+                    .trim_end_matches("0")
+                    .trim_end_matches(".");
+                result.push_str(trimmed);
+                result.push_str(" ");
+                result.push_str(SUFFIX[base as usize]);
+                result
+            }
+        }};
     }
 
     pub use humanize_bytes_decimal;
-
 
     ///
     /// Format a number of bytes as a human-readable string, using the SI decimal suffixes.
@@ -145,38 +163,45 @@ mod decimal {
     ///
     #[macro_export]
     macro_rules! humanize_quantity {
-        ($value:expr) => {
-            {
-                use ::humanize_bytes::smartstring::{SmartString, LazyCompact};
-                use ::core::fmt::Write;
-                let num_bytes = { $value } as f64;
-                if num_bytes <= 0.0 {
-                    "0".into()
-                } else if num_bytes < 1000.0 {
-                    let mut result = SmartString::<LazyCompact>::new();
-                    write!(result, "{}", num_bytes as u16).unwrap();
-                    result
-                } else {
-                    const SUFFIX: [&str; 11] = ["", "k", "M", "G", "T", "P", "E", "Z", "Y", "R", "Q"];
-                    const UNIT: f64 = 1000.0;
-                    let base = num_bytes.log10() as usize / 3;
-                    let curr_base = UNIT.powi(base as i32) as f64;
-                    let units = num_bytes / curr_base;
-                    let units = (units * 100.0).floor() / 100.0;
-                    let mut once = true;
-                    let mut extra = SmartString::<LazyCompact>::new();
-                    write!(extra, "{:.2}", units).unwrap();
-                    let trimmed = extra
-                        .trim_end_matches(|_| if once { once = false; true } else { false })
-                        .trim_end_matches("0")
-                        .trim_end_matches(".");
-                    let mut result: SmartString<LazyCompact> = trimmed.into();
-                    result.push_str(" ");
-                    result.push_str(SUFFIX[base as usize]);
-                    result
-                }
+        ($value:expr) => {{
+            use ::core::fmt::Write;
+            use ::humanize_bytes::smartstring::{LazyCompact, SmartString};
+            let mut num_bytes = { $value } as f64;
+            let mut result = SmartString::<LazyCompact>::new();
+            if num_bytes < 0.0 {
+                write!(result, "-").unwrap();
+                num_bytes = -num_bytes;
             }
-        }
+            if num_bytes < 1000.0 {
+                write!(result, "{}", num_bytes as u16).unwrap();
+                result
+            } else {
+                const SUFFIX: [&str; 11] = ["", "k", "M", "G", "T", "P", "E", "Z", "Y", "R", "Q"];
+                const UNIT: f64 = 1000.0;
+                let base = num_bytes.log10() as usize / 3;
+                let curr_base = UNIT.powi(base as i32) as f64;
+                let units = num_bytes / curr_base;
+                let units = (units * 100.0).floor() / 100.0;
+                let mut once = true;
+                let mut extra = SmartString::<LazyCompact>::new();
+                write!(extra, "{:.2}", units).unwrap();
+                let trimmed = extra
+                    .trim_end_matches(|_| {
+                        if once {
+                            once = false;
+                            true
+                        } else {
+                            false
+                        }
+                    })
+                    .trim_end_matches("0")
+                    .trim_end_matches(".");
+                result.push_str(trimmed);
+                result.push_str(" ");
+                result.push_str(SUFFIX[base as usize]);
+                result
+            }
+        }};
     }
 
     pub use humanize_quantity;
